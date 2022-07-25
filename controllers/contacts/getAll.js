@@ -1,7 +1,7 @@
-const { Contact } = require("../../models/contact");
+const service = require("../../service");
 
 const getAll = async (req, res, next) => {
-  const result = await Contact.find({}, "-createdAt -updatedAt");
+  const result = await service.getAllTasks();
   res.json(result);
 };
 

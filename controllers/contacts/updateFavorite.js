@@ -1,5 +1,6 @@
-const { Contact, schemas } = require("../../models/contact");
+const { schemas } = require("../../models/contact");
 const { createError } = require("../../helpers");
+const service = require("../../service");
 
 const updateFavorite = async (req, res, next) => {
   const { error } = schemas.updateFavorite.validate(req.body);
@@ -7,7 +8,7 @@ const updateFavorite = async (req, res, next) => {
     throw createError(400, error.message);
   }
   const { id } = req.params;
-  const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
+  const result = await service.updateTask(id, req.body, { new: true });
   if (!result) {
     throw createError(404);
   }
