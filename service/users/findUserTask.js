@@ -1,7 +1,7 @@
 const { User } = require("../../models/user");
 
-const findUserTask = ({ email }) => {
-  return User.findOne({ email });
+const findUserTask = async ({ email }) => {
+  return await User.findOne({ email });
 };
 
 module.exports = findUserTask;
