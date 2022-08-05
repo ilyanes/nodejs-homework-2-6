@@ -7,6 +7,10 @@ const contactSchema = new Schema(
     email: { type: String, unique: true },
     phone: { type: String, unique: true },
     favorite: { type: Boolean, default: false },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -27,4 +31,7 @@ const schemas = {
 
 const Contact = model("contact", contactSchema);
 
-module.exports = { Contact, schemas };
+module.exports = {
+  Contact,
+  schemas,
+};
