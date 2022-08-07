@@ -7,7 +7,7 @@ const signup = async (req, res) => {
   // if (error) {
   //   throw createError(400, error.message);
   // }
-  const { email, password } = req.body;
+  const { email, password, avatarURL } = req.body;
   const user = await service.findUserTask({ email });
   if (user) {
     throw createError(409, "Email in use");
@@ -16,6 +16,7 @@ const signup = async (req, res) => {
   const result = await service.createUserTask({
     ...req.body,
     password,
+    avatarURL,
   });
   res.status(201).json({
     user: { email: result.email, subscription: result.subscription },
