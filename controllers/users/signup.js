@@ -7,7 +7,7 @@ const signup = async (req, res) => {
   // if (error) {
   //   throw createError(400, error.message);
   // }
-  const { email, password, avatarURL, verificationToken } = req.body;
+  const { email, password, avatarURL } = req.body;
   const user = await service.findUserTask({ email });
   if (user) {
     throw createError(409, "Email in use");
@@ -17,13 +17,12 @@ const signup = async (req, res) => {
     ...req.body,
     password,
     avatarURL,
-    verificationToken,
   });
 
   const mail = {
     to: email,
     subject: "Подтверждение регистрации на сайте",
-    html: `<a target="_blank" href="http://localhost:5000/api/users/verify/${verificationToken}">Нажмите для подтверждения регистрации</a>`,
+    html: `<a target="_blank" href="http://localhost:5000/api/users/verify/${result.verificationToken}">Нажмите для подтверждения регистрации</a>`,
   };
   await sendEmail(mail);
   await res.status(201).json({
