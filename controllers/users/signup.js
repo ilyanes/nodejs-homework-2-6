@@ -1,4 +1,4 @@
-const { createError } = require("../../helpers");
+const { createError, sendEmail } = require("../../helpers");
 // const { schemas } = require("../../models/user");
 const service = require("../../service/users/");
 
@@ -18,7 +18,14 @@ const signup = async (req, res) => {
     password,
     avatarURL,
   });
-  res.status(201).json({
+
+  const mail = {
+    to: email,
+    subject: "Подтверждение регистрации на сайте",
+    html: `<a target="_blank" href="http://localhost:5000/api/users/verify/${result.verificationToken}">Нажмите для подтверждения регистрации</a>`,
+  };
+  await sendEmail(mail);
+  await res.status(201).json({
     user: { email: result.email, subscription: result.subscription },
   });
 };
